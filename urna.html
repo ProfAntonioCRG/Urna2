@@ -1,1 +1,41 @@
-
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna Eletrônica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="urna">
+        <div class="tela">
+            <div class="display">
+                <p>Digite o número do candidato:</p>
+                <div class="numero" id="numero"></div>
+                <p id="mensagem"></p>
+            </div>
+        </div>
+        <div class="teclado">
+            <div class="botoes">
+                <button class="btn" onclick="teclar(1)">1</button>
+                <button class="btn" onclick="teclar(2)">2</button>
+                <button class="btn" onclick="teclar(3)">3</button>
+                <button class="btn" onclick="teclar(4)">4</button>
+                <button class="btn" onclick="teclar(5)">5</button>
+                <button class="btn" onclick="teclar(6)">6</button>
+                <button class="btn" onclick="teclar(7)">7</button>
+                <button class="btn" onclick="teclar(8)">8</button>
+                <button class="btn" onclick="teclar(9)">9</button>
+                <button class="btn" onclick="teclar(0)">0</button>
+            </div>
+            <div class="acoes">
+                <button class="btn limpar" onclick="limpar()">Corrige</button>
+                <button class="btn confirma" onclick="confirmar()">Confirma</button>
+            </div>
+        </div>
+    </div>
+    <audio id="tecla-som" src="tecla.mp3"></audio>
+    <audio id="fim-som" src="fim.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
