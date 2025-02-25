@@ -1,1 +1,64 @@
+// server.js
 
+const express = require('express');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configuração do Multer para upload de arquivos
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+const upload = multer({ storage });
+
+// Simulação de banco de dados
+let votacaoLiberada = false;
+let brancoNuloLiberado = false;
+let candidatos = [];
+let votos = [];
+
+// Rotas
+app.post('/liberar-votacao', (req, res) => {
+    votacaoLiberada = true;
+    res.json({ success: true });
+});
+
+app.post('/bloquear-votacao', (req, res) => {
+    votacaoLiberada = false;
+    res.json({ success: true });
+});
+
+app.post('/cadastrar-candidato', upload.single('foto'), (req, res) => {
+    const { nome, numero } = req.body;
+    const foto = req.file.filename;
+    candidatos.push({ nome, numero, foto, votos: 0 });
+    res.json({ success: true });
+});
+
+app.get('/gerar-relatorio', (req, res) => {
+    res.json({ success: true, votos: candidatos });
+});
+
+app.post('/liberar-branco-nulo', (req, res) => {
+    brancoNuloLiberado = true;
+    res.json({ success: true });
+});
+
+app.post('/bloquear-branco-nulo', (req, res) => {
+    brancoNuloLiberado = false;
+    res.json({ success: true });
+});
+
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
